@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="zh-TW" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>汪鎰安 YI-AN WANG | APEX PREDATOR</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;700;900&family=Rajdhani:wght@500;600;700;900&family=Teko:wght@500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        apexRed: '#da292a',
+                        apexDark: '#111111',
+                        apexGray: '#2a2a2a',
+                        apexLight: '#f4f4f4',
+                    },
+                    fontFamily: {
+                        sans: ['Noto Sans TC', 'sans-serif'],
+                        raj: ['Rajdhani', 'sans-serif'],
+                        teko: ['Teko', 'sans-serif'],
+                    },
+                }
+            }
+        }
+    </script>
+    <style>
+        :root {
+            --apex-red: #da292a;
+            --apex-dark: #111111;
+        }
+
+        body {
+            background-color: var(--apex-dark);
+            color: #ffffff;
+            font-family: 'Rajdhani', 'Noto Sans TC', sans-serif;
+            overflow-x: hidden;
+        }
+
+        /* 背景：對角掃描線與六角形網格混合 */
+        .bg-pattern {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: 
+                repeating-linear-gradient(
+                    45deg,
+                    transparent,
+                    transparent 10px,
+                    rgba(255, 255, 255, 0.02) 10px,
+                    rgba(255, 255, 255, 0.02) 11px
+                ),
+                radial-gradient(circle at 50% 50%, #1a1a1a 0%, #0a0a0a 100%);
+            z-index: -2;
+        }
+
+        /* 頂部紅色發光裝飾線 */
+        .top-glow-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: var(--apex-red);
+            box-shadow: 0 0 15px var(--apex-red);
+            z-index: 100;
+        }
+
+        /* APEX 切角形狀 (Clip-path) */
+        .clip-slant {
+            clip-path: polygon(20px 0, 100% 0, 100% calc(100% - 20px), calc(100% - 20px) 100%, 0 100%, 0 20px);
+        }
+        
+        .clip-slant-reverse {
+            clip-path: polygon(0 0, calc(100% - 20px) 0, 100% 20px, 100% 100%, 20px 100%, 0 calc(100% - 20px));
+        }
+
+        .clip-btn {
+            clip-path: polygon(15px 0, 100% 0, calc(100% - 15px) 100%, 0 100%);
+            transition: all 0.2s ease-in-out;
+        }
+        
+        .clip-btn:hover {
+            transform: translateX(5px) scale(1.05);
+            background-color: #fff;
+            color: var(--apex-red);
+        }
+
+        /* 標題特效 */
+        .title-glitch {
+            text-transform: uppercase;
+            position: relative;
+            text-shadow: 2px 2px 0px rgba(218, 41, 42, 0.7), -2px -2px 0px rgba(0, 255, 255, 0.3);
+        }
+
+        /* 裝飾性格線 */
+        .deco-line {
+            height: 2px;
+            background: linear-gradient(90deg, var(--apex-red) 0%, transparent 100%);
+        }
+
+        /* 滾動動畫 */
+        .reveal {
+            opacity: 0;
+            transform: translateY(40px) skewY(2deg);
+            transition: all 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0) skewY(0);
+        }
+
+        /* 技能條 - 護甲風格 */
+        .shield-cell {
+            height: 100%;
+            background-color: var(--apex-red);
+            border-right: 2px solid var(--apex-dark);
+            box-shadow: 0 0 8px var(--apex-red);
+        }
+
+        /* 導覽列 */
+        nav {
+            background: rgba(17, 17, 17, 0.9);
+            border-bottom: 2px solid rgba(218, 41, 42, 0.3);
+            backdrop-filter: blur(5px);
+        }
+
+        /* 自定義捲軸 */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: var(--apex-dark); border-left: 1px solid #333; }
+        ::-webkit-scrollbar-thumb { background: var(--apex-red); }
+        ::-webkit-scrollbar-thumb:hover { background: #ff3a3a; }
+
+    </style>
+</head>
+<body class="antialiased selection:bg-apexRed selection:text-white">
+
+    <div class="bg-pattern"></div>
+    <div class="top-glow-bar"></div>
+
+    <!-- 導覽列 -->
+    <nav class="fixed w-full z-50 transition-all duration-300 py-3">
+        <div class="max-w-7xl mx-auto px-6 flex justify-between items-center">
+            <a href="#hero" class="font-teko text-3xl font-bold tracking-widest text-white group flex items-center">
+                <span class="text-apexRed mr-2">///</span> Y.WANG
+            </a>
+            <div class="hidden md:flex space-x-1 font-raj font-bold text-lg tracking-widest">
+                <a href="#about" class="px-4 py-2 hover:bg-apexRed hover:text-white transition-colors duration-200 clip-btn text-apexRed">LORE</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- HERO SECTION -->
+    <section id="hero" class="min-h-screen flex items-center relative pt-20 border-b-4 border-apexRed/20 overflow-hidden">
+        <!-- 背景大字 -->
+        <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-[15rem] md:text-[25rem] font-teko font-bold text-white opacity-[0.03] whitespace-nowrap z-[-1] pointer-events-none">
+            PREDATOR
+        </div>
+
+        <div class="max-w-7xl mx-auto px-6 w-full grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+            <div class="order-2 lg:order-1 reveal active">
+                <div class="flex items-center space-x-3 mb-4">
+                    <div class="h-6 w-2 bg-apexRed"></div>
+                    <p class="font-raj text-apexRed font-bold tracking-[0.3em] text-sm md:text-base">PLAYER ONE // READY</p>
+                </div>
+                
+                <h1 class="text-7xl md:text-9xl font-teko font-bold mb-2 leading-none title-glitch text-white">
+                    汪鎰安
+                </h1>
+                <h2 class="text-3xl md:text-5xl font-teko font-bold text-gray-400 mb-6 uppercase tracking-wide">
+                    Lead Developer <span class="text-apexRed">x</span> Code Champion
+                </h2>
+                
+                <div class="w-full h-[1px] bg-gray-700 mb-6 relative">
+                    <div class="absolute top-0 left-0 h-full w-1/3 bg-apexRed"></div>
+                </div>
+
+                <p class="font-sans text-gray-300 text-lg leading-relaxed mb-10 max-w-xl">
+                    部署於網路前線的全端開發者。具備極限競技的專注力與精準度，擅長在壓力下產出高效能、高可用性的系統架構與流暢的數位體驗。
+                </p>
+                
+                <div class="flex flex-wrap gap-6 font-raj font-bold text-xl tracking-wider">
+                    <a href="#about" class="bg-apexRed text-white px-10 py-3 clip-btn shadow-[0_0_15px_rgba(218,41,42,0.5)]">
+                        READ_LORE
+                    </a>
+                </div>
+            </div>
+
+            <div class="order-1 lg:order-2 flex justify-center reveal active delay-200">
+                <!-- 裝飾性徽章/圖像區域 -->
+                <div class="relative w-72 h-72 md:w-96 md:h-96">
+                    <!-- 外框旋轉 -->
+                    <div class="absolute inset-0 border-4 border-dashed border-apexRed/40 rounded-full animate-[spin_20s_linear_infinite]"></div>
+                    <!-- 內框 -->
+                    <div class="absolute inset-4 border-2 border-gray-600 clip-slant bg-apexGray flex items-center justify-center overflow-hidden">
+                        <div class="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')] opacity-20"></div>
+                        <i class="fa-solid fa-skull text-8xl text-apexRed drop-shadow-[0_0_15px_rgba(218,41,42,0.8)]"></i>
+                        <!-- 掃描線 -->
+                        <div class="absolute top-0 left-0 w-full h-2 bg-white/20 blur-sm animate-[ping_3s_linear_infinite]"></div>
+                    </div>
+                    <!-- 裝飾標籤 -->
+                    <div class="absolute -bottom-4 -right-4 bg-apexRed text-white font-teko text-2xl px-4 py-1 clip-btn font-bold">
+                        LV. 99
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ABOUT SECTION (LORE) -->
+    <section id="about" class="py-24 relative">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="reveal">
+                <div class="flex items-end mb-2">
+                    <h2 class="text-6xl font-teko font-bold text-white uppercase tracking-wider">Legend Lore</h2>
+                    <span class="text-apexRed font-raj font-bold tracking-[0.2em] ml-4 mb-2">/// BACKGROUND DATA</span>
+                </div>
+                <div class="deco-line w-full mb-12"></div>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+                <!-- 左側數據面板 -->
+                <div class="lg:col-span-4 reveal delay-100">
+                    <div class="bg-apexGray clip-slant p-6 border-l-4 border-apexRed relative h-full">
+                        <div class="absolute top-2 right-4 text-gray-600 font-teko text-4xl opacity-30">01</div>
+                        <ul class="space-y-6 font-raj text-lg tracking-wider">
+                            <li class="border-b border-gray-700 pb-2">
+                                <span class="text-gray-400 block text-sm">CLASS</span>
+                                <span class="text-white font-bold text-2xl uppercase">Full-Stack Assault</span>
+                            </li>
+                            <li class="border-b border-gray-700 pb-2">
+                                <span class="text-gray-400 block text-sm">HOMESPACE</span>
+                                <span class="text-white font-bold text-2xl uppercase">Taiwan Server</span>
+                            </li>
+                            <li class="border-b border-gray-700 pb-2">
+                                <span class="text-gray-400 block text-sm">PASSIVE ABILITY</span>
+                                <span class="text-apexRed font-bold text-2xl uppercase">Rapid Debugging</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <!-- 右側自傳內容 -->
+                <div class="lg:col-span-8 bg-[#151515] clip-slant-reverse p-8 md:p-12 border border-gray-800 reveal delay-200">
+                    <h3 class="font-teko text-4xl text-white mb-6 uppercase border-b-2 border-apexRed inline-block">System Initialization...</h3>
+                    <div class="space-y-6 font-sans text-gray-300 leading-relaxed text-lg text-justify">
+                        <p>
+                            你好，我是<strong class="text-white">汪鎰安</strong>。如同在競技場上需要精準的走位與策略，在軟體開發的領域中，我追求的是<span class="text-apexRed font-bold">極致的效能與無懈可擊的架構</span>。
+                        </p>
+                        <p>
+                            身為一名全端開發者，我習慣在混亂的需求中找出最佳路徑 (Optimal Path)。無論是建構高互動性的前端介面，或是打造耐得住高流量衝擊的後端伺服器，我都能夠裝備最合適的技術棧 (Tech Stack) 來贏得勝利。
+                        </p>
+                        <p>
+                            我相信，優秀的程式碼就像是精準的槍法，不容許一絲多餘的動作。保持冷靜、快速迭代、並在團隊中擔任關鍵的火力支援，這就是我的作戰風格。
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="py-10 bg-[#0a0a0a] text-center border-t border-gray-800 mt-20">
+        <!-- Social Links -->
+        <div class="flex justify-center space-x-8 mb-6 text-2xl">
+            <a href="#" class="text-gray-500 hover:text-apexRed hover:scale-125 transition-all duration-200">
+                <i class="fa-brands fa-github"></i>
+            </a>
+            <a href="#" class="text-gray-500 hover:text-apexRed hover:scale-125 transition-all duration-200">
+                <i class="fa-brands fa-linkedin-in"></i>
+            </a>
+            <a href="#" class="text-gray-500 hover:text-apexRed hover:scale-125 transition-all duration-200">
+                <i class="fa-brands fa-discord"></i>
+            </a>
+        </div>
+        <p class="font-raj font-bold text-gray-600 tracking-widest uppercase text-sm">
+            &copy; 2026 YI-AN WANG. <span class="text-apexRed">CHAMPION STANDS READY.</span>
+        </p>
+    </footer>
+
+    <!-- 互動腳本 -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // 滾動顯示動畫 (Scroll Reveal)
+            const revealElements = document.querySelectorAll('.reveal');
+            
+            const revealObserver = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('active');
+                        // 觸發後取消觀察以增進效能
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, {
+                root: null,
+                threshold: 0.1,
+                rootMargin: "0px 0px -50px 0px"
+            });
+
+            revealElements.forEach(el => {
+                // hero 區塊初始已加上 active，跳過
+                if(!el.classList.contains('active')){
+                    revealObserver.observe(el);
+                }
+            });
+
+            // 導覽列滾動效果
+            const nav = document.querySelector('nav');
+            window.addEventListener('scroll', () => {
+                if (window.scrollY > 50) {
+                    nav.classList.add('shadow-[0_4px_20px_rgba(0,0,0,0.8)]');
+                    nav.style.backgroundColor = 'rgba(10, 10, 10, 0.95)';
+                } else {
+                    nav.classList.remove('shadow-[0_4px_20px_rgba(0,0,0,0.8)]');
+                    nav.style.backgroundColor = 'rgba(17, 17, 17, 0.9)';
+                }
+            });
+        });
+    </script>
+</body>
+</html>
